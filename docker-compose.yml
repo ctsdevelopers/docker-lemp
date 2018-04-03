@@ -1,50 +1,50 @@
-nginx:
-    build: ./nginx/
-    ports:
-        - 80:80
-    links:
-        - php
-    volumes_from:
-        - app
-        
-php:
-    build: ./php/
-    expose:
-        - 9000
-    links:
-        - mysql
-    volumes_from:
-        - app
-        
-app:
-    image: php:7.1-fpm
-    volumes:
-        - ./public_html:/var/www/
-    command: "true"
-    
-mysql:
-    build: ./mysql/
-    volumes_from:
-        - data
-        - app
-    ports:
-        - 3306:3306
-    environment:
-        MYSQL_ROOT_PASSWORD: admin
-        MYSQL_DATABASE: kinetix_master
-        MYSQL_USER: root
-        MYSQL_PASSWORD: admin
-data:
-    image: mysql:latest
-    volumes:
-        - /var/lib/mysql
-    command: "true"
-    
-phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-        - 8080:80
-    links:
-        - mysql
-    environment:
-        PMA_HOST: mysql
+version: '2'
+
+services:
+        nginx:
+            build: ./nginx/
+            ports:
+              - 80:80
+            links:
+                - php
+            volumes_from:
+                - app
+        php:
+            build: ./php/
+            expose:
+                - 9000
+            links:
+                - mysql
+            volumes_from:
+                - app
+        app:
+            image: php:7.1-fpm
+            volumes:
+                - ./public_html:/var/www/
+            command: "true"
+            
+        mysql:
+            build: ./mysql/
+            volumes_from:
+                - data
+            ports:
+                - 3306:3306
+            environment:
+                MYSQL_ROOT_PASSWORD: admin
+                MYSQL_DATABASE: kinetix_master
+                MYSQL_USER: root
+                MYSQL_PASSWORD: admin
+        data:
+            image: mysql:latest
+            volumes:
+                - /var/lib/mysql
+            command: "true"
+            
+        phpmyadmin:
+            image: phpmyadmin/phpmyadmin
+            ports:
+                - 8080:80
+            links:
+                - mysql
+            environment:
+                PMA_HOST: mysql

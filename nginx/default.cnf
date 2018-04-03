@@ -1,7 +1,9 @@
 server {
     listen 80 default_server;
     root /var/www/kinetix-lis/public;
-    server_name kinetix.local
+
+    server_name whoami.local *.whoami.local;
+
     index index.php;
 
     charset utf-8;
